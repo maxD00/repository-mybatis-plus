@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.baomidou.mybatisplus.samples.crud.config.RepoQueryWrapper;
 import com.baomidou.mybatisplus.samples.crud.domain.Student;
 import com.baomidou.mybatisplus.samples.crud.repository.StudentQueryParam;
 import com.baomidou.mybatisplus.samples.crud.repository.StudentRepo;
@@ -217,10 +218,12 @@ public class SampleTest {
 
     @Test
     public void testRepository() {
+        StudentQueryParam query = new StudentQueryParam();
         List<Student> students = studentRepo.findAll(
-                new LambdaQueryWrapper<StudentQueryParam>()
+                new RepoQueryWrapper<>(query)
                         .gt(StudentQueryParam::getAge, 20)
                         .lt(StudentQueryParam::getScore, 60)
+                        .eq(StudentQueryParam::getMomName, "lijie")
                         .orderByAsc(StudentQueryParam::getAge));
         System.out.println(students.size());
     }

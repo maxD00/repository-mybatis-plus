@@ -1,6 +1,8 @@
 package com.baomidou.mybatisplus.samples.crud.repository;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.samples.crud.config.WhereEndWithSql;
+import com.baomidou.mybatisplus.samples.crud.config.WhereStartWithSql;
 import lombok.Data;
 
 /**
@@ -8,8 +10,12 @@ import lombok.Data;
  */
 @Data
 public class StudentQueryParam {
-    @TableField("s.avg_value")
+    @WhereStartWithSql("s.avg_value")
     private Integer score;
-    @TableField("u.age")
+    @WhereStartWithSql("u.age")
+    @TableField("age")
     private Integer age;
+    @WhereStartWithSql("exists (select 1 from family f where f.user_id=u.id and f.name")
+    @WhereEndWithSql(")")
+    private String momName;
 }

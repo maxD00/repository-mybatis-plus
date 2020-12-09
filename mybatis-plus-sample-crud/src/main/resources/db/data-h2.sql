@@ -13,3 +13,7 @@ INSERT INTO score (id, user_id, avg_value) VALUES
 (3, 3, 56),
 (4, 4, 78),
 (5, 5, 24);
+
+INSERT INTO family (id, user_id, relation, name) VALUES
+(1, 1, 'mom', 'lijie'),
+(2, 2, 'mom', 'zhengjie');
