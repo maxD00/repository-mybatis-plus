@@ -1,6 +1,6 @@
 package com.baomidou.mybatisplus.samples.crud.repository;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.samples.crud.domain.Student;
 import com.baomidou.mybatisplus.samples.crud.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,7 @@ public class StudentRepo {
     @Autowired
     private UserMapper userMapper;
 
-    public List<Student> findAll(Wrapper<StudentQueryParam> queryWrapper) {
-        System.out.println(queryWrapper.getCustomSqlSegment());
+    public List<Student> findAll(LambdaQueryWrapper<StudentQueryParam> queryWrapper) {
         return userMapper.findAll(queryWrapper);
     }
 }

@@ -218,7 +218,7 @@ public class SampleTest {
     @Test
     public void testRepository() {
         List<Student> students = studentRepo.findAll(
-                new QueryWrapper<StudentQueryParam>().lambda()
+                new LambdaQueryWrapper<StudentQueryParam>()
                         .gt(StudentQueryParam::getAge, 20)
                         .lt(StudentQueryParam::getScore, 60)
                         .orderByAsc(StudentQueryParam::getAge));
