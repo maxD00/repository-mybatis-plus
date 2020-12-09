@@ -1,6 +1,7 @@
 package com.baomidou.mybatisplus.samples.crud.config;
 
 import com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper;
+import com.baomidou.mybatisplus.core.conditions.ISqlSegment;
 import com.baomidou.mybatisplus.core.conditions.SharedString;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
@@ -15,6 +16,8 @@ import lombok.SneakyThrows;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -131,10 +134,17 @@ public class RepoQueryWrapper<T> extends AbstractLambdaWrapper<T, RepoQueryWrapp
         Field field = lambda.getInstantiatedType().getDeclaredField(fieldName);
         WhereStartWithSql whereStartWithSql = field.getAnnotation(WhereStartWithSql.class);
         WhereEndWithSql whereEndWithSql = field.getAnnotation(WhereEndWithSql.class);
-        if (whereEndWithSql != null) {
-            return doIt(condition, whereStartWithSql::value, sqlKeyword
-                    , () -> formatSql("{0}", val), whereEndWithSql::value);
+        List<ISqlSegment> segmentList = new ArrayList<>();
+        if(whereStartWithSql != null) {
+            segmentList.add(whereStartWithSql::value);
+        } else {
+            segmentList.add(() -> columnToString(column));
         }
-        return doIt(condition, whereStartWithSql::value, sqlKeyword, () -> formatSql("{0}", val));
+        segmentList.add(sqlKeyword);
+        segmentList.add(() -> formatSql("{0}", val));
+        if(whereEndWithSql != null) {
+            segmentList.add(whereEndWithSql::value);
+        }
+        return doIt(condition, segmentList.toArray(new ISqlSegment[0]));
     }
 }

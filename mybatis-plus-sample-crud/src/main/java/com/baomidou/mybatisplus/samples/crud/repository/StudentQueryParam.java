@@ -10,12 +10,12 @@ import lombok.Data;
  */
 @Data
 public class StudentQueryParam {
-    @WhereStartWithSql("s.avg_value")
+    @TableField("s.avg_value")
     private Integer score;
-    @WhereStartWithSql("u.age")
-    @TableField("age")
+    @TableField("u.age")
     private Integer age;
     @WhereStartWithSql("exists (select 1 from family f where f.user_id=u.id and f.name")
     @WhereEndWithSql(")")
+    @TableField("safasffd")
     private String momName;
 }
