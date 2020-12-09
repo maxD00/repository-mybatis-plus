@@ -7,6 +7,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.baomidou.mybatisplus.samples.crud.domain.Student;
+import com.baomidou.mybatisplus.samples.crud.repository.StudentQueryParam;
+import com.baomidou.mybatisplus.samples.crud.repository.StudentRepo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +38,8 @@ public class SampleTest {
 
     @Resource
     private UserMapper mapper;
+    @Resource
+    private StudentRepo studentRepo;
 
     @Test
     public void aInsert() {
@@ -189,13 +194,13 @@ public class SampleTest {
     }
 
     @Test
-    public void testTableFieldExistFalse(){
+    public void testTableFieldExistFalse() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.select("age, count(age) as count")
                 .groupBy("age");
         List<User> list = mapper.selectList(wrapper);
         list.forEach(System.out::println);
-        list.forEach(x->{
+        list.forEach(x -> {
             Assert.assertNull(x.getId());
             Assert.assertNotNull(x.getAge());
             Assert.assertNotNull(x.getCount());
@@ -210,4 +215,13 @@ public class SampleTest {
 
     }
 
+    @Test
+    public void testRepository() {
+        List<Student> students = studentRepo.findAll(
+                new QueryWrapper<StudentQueryParam>().lambda()
+                        .gt(StudentQueryParam::getAge, 20)
+                        .lt(StudentQueryParam::getScore, 60)
+                        .orderByAsc(StudentQueryParam::getAge));
+        System.out.println(students.size());
+    }
 }
