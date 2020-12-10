@@ -23,6 +23,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 /**
+ * 用于仓库查询条件构造.
+ *
  * @author maxD
  */
 public class RepoQueryWrapper<T> extends AbstractLambdaWrapper<T, RepoQueryWrapper<T>>
@@ -135,14 +137,14 @@ public class RepoQueryWrapper<T> extends AbstractLambdaWrapper<T, RepoQueryWrapp
         WhereStartWithSql whereStartWithSql = field.getAnnotation(WhereStartWithSql.class);
         WhereEndWithSql whereEndWithSql = field.getAnnotation(WhereEndWithSql.class);
         List<ISqlSegment> segmentList = new ArrayList<>();
-        if(whereStartWithSql != null) {
+        if (whereStartWithSql != null) {
             segmentList.add(whereStartWithSql::value);
         } else {
             segmentList.add(() -> columnToString(column));
         }
         segmentList.add(sqlKeyword);
         segmentList.add(() -> formatSql("{0}", val));
-        if(whereEndWithSql != null) {
+        if (whereEndWithSql != null) {
             segmentList.add(whereEndWithSql::value);
         }
         return doIt(condition, segmentList.toArray(new ISqlSegment[0]));

@@ -218,9 +218,8 @@ public class SampleTest {
 
     @Test
     public void testRepository() {
-        StudentQueryParam query = new StudentQueryParam();
         List<Student> students = studentRepo.findAll(
-                new RepoQueryWrapper<>(query)
+                new RepoQueryWrapper<StudentQueryParam>()
                         .gt(StudentQueryParam::getAge, 20)
                         .lt(StudentQueryParam::getScore, 60)
                         .eq(StudentQueryParam::getMomName, "lijie")
