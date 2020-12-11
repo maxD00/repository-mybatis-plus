@@ -216,14 +216,17 @@ public class SampleTest {
 
     }
 
+    /**
+     * 仓库查询测试方法.
+     */
     @Test
     public void testRepository() {
         List<Student> students = studentRepo.findAll(
                 new RepoQueryWrapper<StudentQueryParam>()
+                        .eq(StudentQueryParam::getId, 1)
                         .gt(StudentQueryParam::getAge, 20)
                         .lt(StudentQueryParam::getScore, 60)
                         .eq(StudentQueryParam::getMomName, "lijie")
                         .orderByAsc(StudentQueryParam::getAge));
-        System.out.println(students.size());
     }
 }

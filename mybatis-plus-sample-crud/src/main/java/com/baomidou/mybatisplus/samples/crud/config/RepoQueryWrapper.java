@@ -133,10 +133,12 @@ public class RepoQueryWrapper<T> extends AbstractLambdaWrapper<T, RepoQueryWrapp
     protected RepoQueryWrapper<T> addCondition(boolean condition, SFunction<T, ?> column, SqlKeyword sqlKeyword, Object val) {
         SerializedLambda lambda = LambdaUtils.resolve(column);
         String fieldName = PropertyNamer.methodToProperty(lambda.getImplMethodName());
-        Field field = lambda.getInstantiatedType().getDeclaredField(fieldName);
+        String className = lambda.getInstantiatedType().getName();
+        Field field = Class.forName(className).getDeclaredField(fieldName);
         WhereStartWithSql whereStartWithSql = field.getAnnotation(WhereStartWithSql.class);
         WhereEndWithSql whereEndWithSql = field.getAnnotation(WhereEndWithSql.class);
         List<ISqlSegment> segmentList = new ArrayList<>();
+        // 设置了startWithSql则用此脚本构建,否则使用默认tableFieldId值
         if (whereStartWithSql != null) {
             segmentList.add(whereStartWithSql::value);
         } else {

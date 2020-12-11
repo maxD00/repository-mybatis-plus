@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.samples.crud.config.RepoQueryWrapper;
 import com.baomidou.mybatisplus.samples.crud.domain.Student;
 import com.baomidou.mybatisplus.samples.crud.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public class StudentRepo {
     @Autowired
     private UserMapper userMapper;
+//    @Autowired
+//    AnnotationMetadata importingClassMetadata;
 
     public List<Student> findAll(RepoQueryWrapper<StudentQueryParam> queryWrapper) {
         return userMapper.findAll(queryWrapper);

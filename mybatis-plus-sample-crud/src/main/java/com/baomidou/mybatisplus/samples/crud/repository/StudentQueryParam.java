@@ -1,6 +1,7 @@
 package com.baomidou.mybatisplus.samples.crud.repository;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.samples.crud.config.AbstractQueryParam;
 import com.baomidou.mybatisplus.samples.crud.config.WhereEndWithSql;
 import com.baomidou.mybatisplus.samples.crud.config.WhereStartWithSql;
 import lombok.Data;
@@ -9,7 +10,9 @@ import lombok.Data;
  * @author maxD
  */
 @Data
-public class StudentQueryParam {
+public class StudentQueryParam extends AbstractQueryParam {
+    @TableField("s.id")
+    private String id;
     @TableField("s.avg_value")
     private Integer score;
     @TableField("u.age")
