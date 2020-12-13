@@ -1,5 +1,6 @@
 package com.baomidou.mybatisplus.samples.crud.repository;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.samples.crud.config.RepoQueryWrapper;
 import com.baomidou.mybatisplus.samples.crud.domain.Student;
 import com.baomidou.mybatisplus.samples.crud.mapper.UserMapper;
@@ -16,10 +17,12 @@ import java.util.List;
 public class StudentRepo {
     @Autowired
     private UserMapper userMapper;
-//    @Autowired
-//    AnnotationMetadata importingClassMetadata;
 
     public List<Student> findAll(RepoQueryWrapper<StudentQueryParam> queryWrapper) {
         return userMapper.findAll(queryWrapper);
+    }
+
+    public Page<Student> findAll(Page<Student> page, RepoQueryWrapper<StudentQueryParam> queryWrapper) {
+        return userMapper.findAll(page, queryWrapper);
     }
 }

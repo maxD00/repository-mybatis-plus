@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class StudentQueryParam extends AbstractQueryParam {
-    @TableField("s.id")
+    @TableField("u.id")
     private String id;
     @TableField("s.avg_value")
     private Integer score;
