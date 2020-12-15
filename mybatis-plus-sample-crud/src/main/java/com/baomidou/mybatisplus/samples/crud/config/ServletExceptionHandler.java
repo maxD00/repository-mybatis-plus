@@ -135,7 +135,7 @@ public class ServletExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RequestBodyValidationException.class)
     public ResponseEntity<Object> handle(RequestBodyValidationException exception) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                .body(new RequestParameterErrorMessage(cngcWebMessageSource.getMessage(
+                .body(new RequestBodyAttributeErrorMessage(cngcWebMessageSource.getMessage(
                         WebMessageConstants.ERROR_DEFAULT_PARAMETER_VALIDATION), exception.getFieldErrors()));
     }
 
@@ -152,14 +152,14 @@ public class ServletExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * 出现请求参数异常时,返回的消息体对象.
+     * 出现请求体参数异常时,返回的消息体对象.
      */
     @Data
-    private static final class RequestParameterErrorMessage {
+    private static final class RequestBodyAttributeErrorMessage {
         private String message;
         private List<Error> errors = new ArrayList<>();
 
-        private RequestParameterErrorMessage(String message, @NotNull List<FieldError> errors) {
+        private RequestBodyAttributeErrorMessage(String message, @NotNull List<FieldError> errors) {
             this.message = message;
             for (FieldError error : errors) {
                 this.errors.add(new Error(error));
