@@ -8,6 +8,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 对request param名进行 蛇形 到 驼峰的转换.
+ * 注意:转换出来的参数会追加进requestparams中,一般情况下参数数量会有增加.
+ *
  * @author maxD
  */
 @Retention(RetentionPolicy.RUNTIME)

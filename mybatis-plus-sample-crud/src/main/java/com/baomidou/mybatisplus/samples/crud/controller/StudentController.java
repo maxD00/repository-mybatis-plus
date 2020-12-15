@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletRequest;
-import java.util.List;
-
 /**
  * @author maxD
  */
@@ -24,8 +21,8 @@ public class StudentController {
     private StudentRepo studentRepo;
 
     @GetMapping("/students")
-    public List<Student> findAll(ServletRequest request, @ModelAttribute("webApiPage") Page<Student> page
-            , Page<Student> page2, String userName, @RequestParam("user_name") String name) {
+    public Page<Student> findAll(@ModelAttribute("webApiPage") Page<Student> page,
+                                 Page<Student> page2, String userName, @RequestParam("user_name") String name) {
         Assert.notNull(userName, "蛇形传递的参数名,自动转换为驼峰");
         Assert.notNull(name.equals(userName), "保留原有的参数名");
         Assert.isTrue(page.getCurrent() != page2.getCurrent(), "没有使用\"webApiPage\"注解的page对象不受影响");
@@ -33,8 +30,7 @@ public class StudentController {
         Assert.isTrue(page.getSize() != 1000, "分页框架处理生成的page对象,不进行默认的controller参数绑定");
         return studentRepo.findAll(page,
                 new RepoQueryWrapper<StudentQueryParam>()
-                        .gt(StudentQueryParam::getScore, 20)
-                        .orderByDesc(StudentQueryParam::getScore))
-                .getRecords();
+                        .gt(StudentQueryParam::getScore, 30)
+                        .orderByDesc(StudentQueryParam::getScore));
     }
 }
