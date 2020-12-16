@@ -27,4 +27,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select u.id,u.name,u.age,s.avg_value as score from user u left join score s on s.user_id=u.id ${ew.customSqlSegment}")
     Page<Student> findAll(Page<Student> page, @Param(Constants.WRAPPER) Wrapper<StudentQueryParam> queryWrapper);
+
+    Student findStudentById(String id);
 }

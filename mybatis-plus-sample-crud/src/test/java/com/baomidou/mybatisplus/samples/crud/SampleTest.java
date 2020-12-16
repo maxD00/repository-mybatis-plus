@@ -229,4 +229,11 @@ public class SampleTest {
                         .eq(StudentQueryParam::getMomName, "lijie")
                         .orderByAsc(StudentQueryParam::getAge));
     }
+
+
+    @Test
+    public void testRepositoryById() {
+        Student student = studentRepo.findStudentById("1");
+        student.getFamilyList();
+    }
 }

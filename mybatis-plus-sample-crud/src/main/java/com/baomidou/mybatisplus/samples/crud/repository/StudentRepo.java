@@ -25,4 +25,8 @@ public class StudentRepo {
     public Page<Student> findAll(Page<Student> page, RepoQueryWrapper<StudentQueryParam> queryWrapper) {
         return userMapper.findAll(page, queryWrapper);
     }
+
+    public Student findStudentById(String id) {
+        return userMapper.findStudentById(id);
+    }
 }

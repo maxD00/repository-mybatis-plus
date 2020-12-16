@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baomidou.mybatisplus.samples.crud.mapper.UserMapper">
+
+    <resultMap id="studentResult" type="com.baomidou.mybatisplus.samples.crud.domain.Student">
+        <id property="id" column="id"/>
+        <collection fetchType="lazy" property="familyList" javaType="ArrayList" column="id" ofType="Family" select="selectFamily"/>
+    </resultMap>
+
+    <select id="findStudentById" resultMap="studentResult">
+        select *
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="selectFamily" resultType="com.baomidou.mybatisplus.samples.crud.domain.Family">
+        select *
+        from family
+        where user_id = #{id}
+    </select>
+</mapper>
